@@ -32,11 +32,7 @@
     <meta property="og:locale" content="fr_FR" />
 
     <!-- ═══ FAVICON ═══ -->
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080808'/%3E%3Cg stroke='%23b8975a' stroke-width='2.2' fill='none' stroke-linecap='round'%3E%3Cline x1='32' y1='8' x2='18' y2='52'/%3E%3Cline x1='32' y1='8' x2='46' y2='52'/%3E%3Cline x1='22' y1='36' x2='32' y2='36'/%3E%3Cpath d='M32 10 Q52 10 52 31 Q52 52 32 52'/%3E%3Ccircle cx='14' cy='36' r='2.5' fill='%23b8975a'/%3E%3Cline x1='16.5' y1='36' x2='22' y2='36'/%3E%3C/g%3E%3C/svg%3E"
-    />
+    <link rel="icon" type="image/svg+xml" href="logo.png" />
 
     <!-- ═══ FONTS ═══ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -230,6 +226,113 @@
         color: var(--ink);
       }
 
+      /* BURGER */
+      .burger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24px;
+        height: 16px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        z-index: 600;
+      }
+      @media (min-width: 768px) {
+        .burger {
+          display: none;
+        }
+      }
+      .burger span {
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: var(--paper);
+        transition:
+          transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.25s;
+      }
+      .burger.open span:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+      }
+      .burger.open span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .burger.open span:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+      }
+
+      /* MOBILE MENU */
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 8, 8, 0.97);
+        backdrop-filter: blur(20px);
+        z-index: 490;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .mobile-menu.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      @media (min-width: 768px) {
+        .mobile-menu {
+          display: none;
+        }
+      }
+      .mobile-menu a {
+        font-family: "DM Mono", monospace;
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--paper);
+        text-decoration: none;
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.4s,
+          transform 0.4s,
+          color 0.3s;
+      }
+      .mobile-menu.open a {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .mobile-menu.open a:nth-child(1) {
+        transition-delay: 0.05s;
+      }
+      .mobile-menu.open a:nth-child(2) {
+        transition-delay: 0.1s;
+      }
+      .mobile-menu.open a:nth-child(3) {
+        transition-delay: 0.15s;
+      }
+      .mobile-menu.open a:nth-child(4) {
+        transition-delay: 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--gold);
+      }
+      .mobile-menu a.active {
+        color: var(--gold);
+      }
+      .mobile-menu .menu-cta {
+        margin-top: 0.5rem;
+        padding: 0.8rem 2rem;
+        border: 1px solid rgba(240, 237, 232, 0.3);
+        font-size: clamp(0.65rem, 3vw, 0.85rem);
+        letter-spacing: 0.2em;
+      }
+
       /* PAGE HERO */
       .page-hero {
         min-height: 60vh;
@@ -327,24 +430,11 @@
         animation: fadeU 0.8s 0.9s forwards;
       }
       .badge-flag {
-        display: flex;
-        gap: 2px;
         height: 18px;
-      }
-      .badge-flag span {
-        width: 6px;
-        height: 100%;
-      }
-      .flag-green {
-        background: #00853f;
-        border-radius: 2px 0 0 2px;
-      }
-      .flag-yellow {
-        background: #fdef42;
-      }
-      .flag-red {
-        background: #e31b23;
-        border-radius: 0 2px 2px 0;
+        width: auto;
+        border-radius: 2px;
+        display: block;
+        flex-shrink: 0;
       }
       .badge-text {
         font-family: "DM Mono", monospace;
@@ -815,8 +905,24 @@
     <!-- NAV -->
     <nav id="nav">
       <a href="AD.html" class="nav-logo">AD — <span>Studio Web</span></a>
-      <a href="AD.html#contact" class="nav-cta"><span>Démarrer</span></a>
+      <a href="demarrer.html" class="nav-cta"><span>Démarrer</span></a>
+      <button
+        class="burger"
+        id="burger"
+        aria-label="Menu"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
     </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
+      <a href="AD.html">Accueil</a>
+      <a href="qui-sommes-nous.html" class="active">Qui sommes-nous</a>
+      <a href="politique-de-confidentialite.html">Confidentialité</a>
+      <a href="demarrer.html" class="menu-cta">Démarrer →</a>
+    </div>
 
     <!-- PAGE HERO -->
     <section class="page-hero">
@@ -831,11 +937,7 @@
           digitale peut naître d'Afrique et rayonner dans le monde entier.
         </p>
         <div class="badge-senegal">
-          <div class="badge-flag">
-            <span class="flag-green"></span>
-            <span class="flag-yellow"></span>
-            <span class="flag-red"></span>
-          </div>
+          <img src="senegal.png" class="badge-flag" alt="Drapeau sénégalais" />
           <span class="badge-text">100% Sénégalais · 100% En ligne</span>
         </div>
       </div>
@@ -1017,7 +1119,7 @@
     <section class="cta-section">
       <h2>Prêt à <em>collaborer ?</em></h2>
       <p>Discutons de votre projet. La première consultation est offerte.</p>
-      <a href="index.html#contact" class="cta-btn"
+      <a href="demarrer.html" class="cta-btn"
         ><span>Nous contacter</span><span>→</span></a
       >
     </section>
@@ -1045,6 +1147,24 @@
     </footer>
 
     <script>
+      /* BURGER MENU */
+      const burger = document.getElementById("burger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      burger.addEventListener("click", () => {
+        const isOpen = burger.classList.toggle("open");
+        mobileMenu.classList.toggle("open");
+        burger.setAttribute("aria-expanded", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
+      });
+      mobileMenu.querySelectorAll("a").forEach((a) => {
+        a.addEventListener("click", () => {
+          burger.classList.remove("open");
+          mobileMenu.classList.remove("open");
+          burger.setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "";
+        });
+      });
+
       /* CURSOR */
       const cur = document.getElementById("cur"),
         curR = document.getElementById("curR");
