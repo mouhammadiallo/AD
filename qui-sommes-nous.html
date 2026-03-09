@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ═══ PRIMARY SEO ═══ -->
+    <title>Qui sommes-nous — AD Studio | Agence Web 100% Sénégalaise</title>
+    <meta
+      name="description"
+      content="AD Studio est une agence web 100% sénégalaise, opérant entièrement en ligne. Découvrez notre équipe passionnée, notre vision et notre engagement envers l'excellence digitale africaine."
+    />
+    <meta
+      name="keywords"
+      content="agence web sénégalaise, création site internet Sénégal, développement web Dakar, design UI UX Afrique, e-commerce Sénégal, startup sénégalaise"
+    />
+    <meta name="author" content="AD Studio" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#080808" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href="https://adstudio.com/qui-sommes-nous" />
+
+    <!-- ═══ OPEN GRAPH ═══ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://adstudio.com/qui-sommes-nous" />
+    <meta property="og:site_name" content="AD Studio" />
+    <meta property="og:title" content="Qui sommes-nous — AD Studio" />
+    <meta
+      property="og:description"
+      content="Agence web 100% sénégalaise, 100% en ligne. Découvrez l'équipe derrière vos projets digitaux."
+    />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- ═══ FAVICON ═══ -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080808'/%3E%3Cg stroke='%23b8975a' stroke-width='2.2' fill='none' stroke-linecap='round'%3E%3Cline x1='32' y1='8' x2='18' y2='52'/%3E%3Cline x1='32' y1='8' x2='46' y2='52'/%3E%3Cline x1='22' y1='36' x2='32' y2='36'/%3E%3Cpath d='M32 10 Q52 10 52 31 Q52 52 32 52'/%3E%3Ccircle cx='14' cy='36' r='2.5' fill='%23b8975a'/%3E%3Cline x1='16.5' y1='36' x2='22' y2='36'/%3E%3C/g%3E%3C/svg%3E"
+    />
+
+    <!-- ═══ FONTS ═══ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --ink: #080808;
+        --paper: #f0ede8;
+        --gold: #b8975a;
+        --gold2: #d4b07a;
+        --smoke: #1c1c1c;
+        --mist: #2e2e2e;
+        --dim: rgba(240, 237, 232, 0.35);
+        --fs-xs: clamp(0.55rem, 2vw, 0.65rem);
+        --fs-sm: clamp(0.8rem, 2.5vw, 0.95rem);
+        --fs-h2: clamp(2rem, 7vw, 4.5rem);
+        --fs-hero: clamp(2.8rem, 11vw, 8rem);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        background: var(--ink);
+        color: var(--paper);
+        font-family: "Playfair Display", serif;
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      /* CURSOR */
+      .cur,
+      .cur-r {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .cur {
+        width: 10px;
+        height: 10px;
+        background: var(--paper);
+        mix-blend-mode: difference;
+        transition:
+          width 0.25s,
+          height 0.25s;
+      }
+      .cur-r {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(240, 237, 232, 0.4);
+        transition:
+          left 0.12s ease-out,
+          top 0.12s ease-out,
+          width 0.3s,
+          height 0.3s,
+          border-color 0.3s;
+      }
+      @media (hover: none) {
+        .cur,
+        .cur-r {
+          display: none;
+        }
+      }
+
+      /* NOISE */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9000;
+      }
+
+      /* NAV */
+      nav#nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 1.5rem;
+        background: rgba(8, 8, 8, 0.92);
+        backdrop-filter: blur(14px);
+        transition:
+          background 0.4s,
+          padding 0.4s;
+      }
+      @media (min-width: 768px) {
+        nav#nav {
+          padding: 1.2rem 4rem;
+        }
+      }
+      .nav-logo {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--paper);
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: none;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      @media (min-width: 768px) {
+        .nav-links {
+          display: flex;
+        }
+      }
+      .nav-links a {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--paper);
+        text-decoration: none;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--gold);
+        transition: width 0.35s;
+      }
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+      .nav-links a.active {
+        color: var(--gold);
+      }
+      .nav-cta {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 0.55rem 1.1rem;
+        border: 1px solid rgba(240, 237, 232, 0.2);
+        color: var(--paper);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .nav-cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .nav-cta:hover::before {
+        transform: scaleX(1);
+      }
+      .nav-cta span {
+        position: relative;
+        z-index: 1;
+        transition: color 0.4s;
+      }
+      .nav-cta:hover span {
+        color: var(--ink);
+      }
+
+      /* PAGE HERO */
+      .page-hero {
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 8rem 1.5rem 4rem;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--ink) 0%, var(--smoke) 100%);
+      }
+      @media (min-width: 768px) {
+        .page-hero {
+          padding: 10rem 4rem 6rem;
+        }
+      }
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 80%;
+        height: 150%;
+        background: radial-gradient(
+          ellipse,
+          rgba(184, 151, 90, 0.06) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .label {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        opacity: 0;
+        animation: fadeU 0.8s 0.3s forwards;
+      }
+      .label::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--gold);
+      }
+      .page-title {
+        font-size: var(--fs-hero);
+        font-weight: 400;
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        opacity: 0;
+        animation: fadeU 0.8s 0.5s forwards;
+      }
+      .page-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .page-intro {
+        margin-top: 2rem;
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        color: var(--dim);
+        line-height: 1.95;
+        max-width: 650px;
+        opacity: 0;
+        animation: fadeU 0.8s 0.7s forwards;
+      }
+
+      /* BADGE SENEGAL */
+      .badge-senegal {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-top: 2.5rem;
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          rgba(184, 151, 90, 0.12),
+          rgba(184, 151, 90, 0.05)
+        );
+        border: 1px solid rgba(184, 151, 90, 0.25);
+        border-radius: 50px;
+        opacity: 0;
+        animation: fadeU 0.8s 0.9s forwards;
+      }
+      .badge-flag {
+        display: flex;
+        gap: 2px;
+        height: 18px;
+      }
+      .badge-flag span {
+        width: 6px;
+        height: 100%;
+      }
+      .flag-green {
+        background: #00853f;
+        border-radius: 2px 0 0 2px;
+      }
+      .flag-yellow {
+        background: #fdef42;
+      }
+      .flag-red {
+        background: #e31b23;
+        border-radius: 0 2px 2px 0;
+      }
+      .badge-text {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      /* SECTIONS */
+      section {
+        padding: 5rem 1.5rem;
+      }
+      @media (min-width: 768px) {
+        section {
+          padding: 8rem 4rem;
+        }
+      }
+      .section-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      /* STORY SECTION */
+      .story-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+      @media (min-width: 900px) {
+        .story-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 6rem;
+          align-items: start;
+        }
+      }
+      .story-text h2 {
+        font-size: var(--fs-h2);
+        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 2rem;
+      }
+      .story-text h2 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .story-text p {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        color: var(--dim);
+        line-height: 2;
+        margin-bottom: 1.5rem;
+      }
+      .story-text p strong {
+        color: var(--paper);
+        font-weight: 500;
+      }
+      .story-highlight {
+        padding: 2rem;
+        background: var(--smoke);
+        border-left: 3px solid var(--gold);
+        margin: 2.5rem 0;
+      }
+      .story-highlight p {
+        font-family: "Playfair Display", serif;
+        font-size: 1.25rem;
+        font-style: italic;
+        color: var(--paper);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /* VALUES */
+      .values-section {
+        background: var(--smoke);
+      }
+      .values-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+      .values-header h2 {
+        font-size: var(--fs-h2);
+        font-weight: 400;
+        line-height: 1.1;
+      }
+      .values-header h2 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .values-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1px;
+        background: rgba(240, 237, 232, 0.04);
+      }
+      @media (min-width: 600px) {
+        .values-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1000px) {
+        .values-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .value-card {
+        background: var(--smoke);
+        padding: 2.5rem 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .value-card::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        width: 0;
+        background: var(--gold);
+        transition: width 0.5s ease;
+      }
+      .value-card:hover::before {
+        width: 100%;
+      }
+      .value-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+      .value-card h3 {
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin-bottom: 0.8rem;
+        color: var(--paper);
+      }
+      .value-card p {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--dim);
+        line-height: 1.85;
+      }
+
+      /* STATS */
+      .stats-bar {
+        background: var(--gold);
+        padding: 4rem 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .stats-bar {
+          padding: 5rem 4rem;
+        }
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      @media (min-width: 768px) {
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .stat {
+        text-align: center;
+      }
+      .stat-num {
+        font-size: clamp(2.5rem, 8vw, 4.5rem);
+        font-weight: 400;
+        color: var(--ink);
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .stat-label {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(8, 8, 8, 0.5);
+        margin-top: 0.5rem;
+      }
+
+      /* COMMITMENT */
+      .commitment-section {
+        background: linear-gradient(180deg, var(--ink) 0%, var(--smoke) 100%);
+      }
+      .commitment-content {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .commitment-content h2 {
+        font-size: var(--fs-h2);
+        font-weight: 400;
+        line-height: 1.1;
+        margin-bottom: 2rem;
+      }
+      .commitment-content h2 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .commitment-content p {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        color: var(--dim);
+        line-height: 2;
+        margin-bottom: 1.5rem;
+      }
+      .commitment-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 3rem;
+        text-align: left;
+      }
+      @media (min-width: 600px) {
+        .commitment-list {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .commitment-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: rgba(184, 151, 90, 0.05);
+        border: 1px solid rgba(184, 151, 90, 0.1);
+      }
+      .commitment-item .check {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ink);
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+      .commitment-item span {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        color: var(--paper);
+        line-height: 1.6;
+      }
+
+      /* CTA */
+      .cta-section {
+        background: var(--ink);
+        text-align: center;
+        padding: 6rem 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .cta-section {
+          padding: 8rem 4rem;
+        }
+      }
+      .cta-section h2 {
+        font-size: clamp(1.8rem, 5vw, 3rem);
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+      }
+      .cta-section h2 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .cta-section p {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        color: var(--dim);
+        margin-bottom: 2.5rem;
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 1rem 2rem;
+        background: var(--gold);
+        color: var(--ink);
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s;
+      }
+      .cta-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--paper);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .cta-btn span {
+        position: relative;
+        z-index: 1;
+      }
+      .cta-btn:hover::after {
+        transform: scaleX(1);
+      }
+      .cta-btn:active {
+        transform: scale(0.97);
+      }
+
+      /* FOOTER */
+      footer {
+        border-top: 1px solid rgba(240, 237, 232, 0.05);
+        padding: 3rem 1.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+      @media (min-width: 768px) {
+        footer {
+          padding: 3.5rem 4rem 2.5rem;
+        }
+      }
+      .f-top {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+      @media (min-width: 600px) {
+        .f-top {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+      .f-logo {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--dim);
+      }
+      .f-logo span {
+        color: var(--gold);
+      }
+      .f-socials {
+        display: flex;
+        gap: 1.4rem;
+      }
+      .f-socials a {
+        font-family: "DM Mono", monospace;
+        font-size: 0.52rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--dim);
+        text-decoration: none;
+        transition: color 0.3s;
+        position: relative;
+      }
+      .f-socials a::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--gold);
+        transition: width 0.35s;
+      }
+      .f-socials a:hover {
+        color: var(--gold);
+      }
+      .f-socials a:hover::after {
+        width: 100%;
+      }
+      .f-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(240, 237, 232, 0.05);
+      }
+      .f-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      @media (min-width: 600px) {
+        .f-bottom {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+      .f-legal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem 2rem;
+      }
+      .f-legal a {
+        font-family: "DM Mono", monospace;
+        font-size: 0.48rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(240, 237, 232, 0.28);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .f-legal a:hover {
+        color: var(--gold);
+      }
+      .f-legal a.active {
+        color: var(--gold);
+      }
+      .f-copy {
+        font-family: "DM Mono", monospace;
+        font-size: 0.46rem;
+        letter-spacing: 0.18em;
+        color: rgba(240, 237, 232, 0.15);
+        white-space: nowrap;
+      }
+
+      /* REVEAL */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition:
+          opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .d1 {
+        transition-delay: 0.1s;
+      }
+      .d2 {
+        transition-delay: 0.22s;
+      }
+      .d3 {
+        transition-delay: 0.34s;
+      }
+      .d4 {
+        transition-delay: 0.46s;
+      }
+
+      /* KEYFRAMES */
+      @keyframes fadeU {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- CURSOR -->
+    <div class="cur" id="cur"></div>
+    <div class="cur-r" id="curR"></div>
+
+    <!-- NAV -->
+    <nav id="nav">
+      <a href="AD.html" class="nav-logo">AD — <span>Studio Web</span></a>
+      <a href="AD.html#contact" class="nav-cta"><span>Démarrer</span></a>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+      <div class="hero-content">
+        <div class="label">À propos de nous</div>
+        <h1 class="page-title">
+          Une vision <em>africaine</em><br />du digital.
+        </h1>
+        <p class="page-intro">
+          AD Studio n'est pas juste une agence web. C'est une équipe de
+          passionnés, enracinée au Sénégal, qui croit fermement que l'excellence
+          digitale peut naître d'Afrique et rayonner dans le monde entier.
+        </p>
+        <div class="badge-senegal">
+          <div class="badge-flag">
+            <span class="flag-green"></span>
+            <span class="flag-yellow"></span>
+            <span class="flag-red"></span>
+          </div>
+          <span class="badge-text">100% Sénégalais · 100% En ligne</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section>
+      <div class="section-inner">
+        <div class="story-grid">
+          <div class="story-text reveal">
+            <h2>Notre <em>histoire</em></h2>
+            <p>
+              <strong>AD Studio est né d'une conviction profonde :</strong> les
+              entreprises africaines méritent des solutions digitales de classe
+              mondiale, conçues par des talents locaux qui comprennent leurs
+              réalités, leurs défis et leurs ambitions.
+            </p>
+            <p>
+              Fondée au cœur du Sénégal, notre agence opère
+              <strong>100% en ligne</strong>, sans frontières ni barrières.
+              Cette approche nous permet d'être agiles, réactifs et accessibles
+              à tous nos clients, qu'ils soient à Dakar, Abidjan, Paris ou
+              Montréal.
+            </p>
+            <div class="story-highlight">
+              <p>
+                "Nous croyons que le talent n'a pas de géographie. Notre équipe
+                sénégalaise rivalise avec les meilleures agences internationales
+                — avec l'avantage de comprendre intimement le marché africain."
+              </p>
+            </div>
+            <p>
+              Chaque projet que nous réalisons porte notre ADN : un mélange
+              unique de créativité africaine, de rigueur technique et
+              d'attention obsessionnelle aux détails. Nous ne livrons pas
+              simplement des sites web — nous créons des expériences digitales
+              qui transforment les entreprises.
+            </p>
+          </div>
+          <div class="story-text reveal d2">
+            <h2>Pourquoi <em>100% en ligne ?</em></h2>
+            <p>
+              Notre modèle entièrement digital n'est pas un compromis — c'est un
+              choix stratégique. En opérant en ligne, nous éliminons les
+              contraintes géographiques et les frais généraux inutiles pour
+              <strong>offrir des tarifs compétitifs</strong> sans jamais
+              sacrifier la qualité.
+            </p>
+            <p>
+              Cette flexibilité nous permet de recruter les meilleurs talents
+              sénégalais, peu importe où ils se trouvent. Résultat : une équipe
+              soudée, motivée et constamment connectée à l'écosystème tech
+              mondial.
+            </p>
+            <p>Pour nos clients, cela signifie :</p>
+            <p>
+              → <strong>Communication fluide</strong> via les outils modernes
+              (visio, chat, email)<br />
+              → <strong>Réactivité maximale</strong> avec des réponses sous 48h
+              garanties<br />
+              → <strong>Transparence totale</strong> sur l'avancement de chaque
+              projet<br />
+              → <strong>Collaboration sans friction</strong> quel que soit votre
+              fuseau horaire
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="values-section">
+      <div class="section-inner">
+        <div class="values-header reveal">
+          <h2>Nos <em>valeurs</em></h2>
+        </div>
+        <div class="values-grid">
+          <div class="value-card reveal">
+            <span class="value-icon">◆</span>
+            <h3>Excellence</h3>
+            <p>
+              Nous visons la perfection dans chaque pixel, chaque ligne de code,
+              chaque interaction. Le "bon" n'est jamais suffisant.
+            </p>
+          </div>
+          <div class="value-card reveal d1">
+            <span class="value-icon">◈</span>
+            <h3>Authenticité</h3>
+            <p>
+              Fièrement sénégalais, résolument modernes. Notre identité
+              africaine enrichit notre créativité et notre approche.
+            </p>
+          </div>
+          <div class="value-card reveal d2">
+            <span class="value-icon">◇</span>
+            <h3>Transparence</h3>
+            <p>
+              Pas de surprises, pas de zones grises. Vous savez exactement où en
+              est votre projet, à tout moment.
+            </p>
+          </div>
+          <div class="value-card reveal d3">
+            <span class="value-icon">○</span>
+            <h3>Impact</h3>
+            <p>
+              Chaque site que nous créons doit générer des résultats concrets :
+              visibilité, conversions, croissance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-num" data-target="47">0</div>
+          <div class="stat-label">Projets livrés</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-target="100">0</div>
+          <div class="stat-label">% Satisfaction</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-target="30">0</div>
+          <div class="stat-label">Jours en moyenne</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-target="48">0</div>
+          <div class="stat-label">h Réponse max</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMITMENT -->
+    <section class="commitment-section">
+      <div class="section-inner">
+        <div class="commitment-content reveal">
+          <h2>Notre <em>engagement</em></h2>
+          <p>
+            Quand vous travaillez avec AD Studio, vous ne choisissez pas
+            seulement une agence. Vous choisissez un partenaire qui s'investit
+            corps et âme dans votre réussite digitale.
+          </p>
+          <div class="commitment-list">
+            <div class="commitment-item">
+              <div class="check">✓</div>
+              <span
+                >Un interlocuteur dédié du début à la fin de votre projet</span
+              >
+            </div>
+            <div class="commitment-item">
+              <div class="check">✓</div>
+              <span>Des maquettes validées avant toute ligne de code</span>
+            </div>
+            <div class="commitment-item">
+              <div class="check">✓</div>
+              <span>Livraison dans les délais convenus, sans exception</span>
+            </div>
+            <div class="commitment-item">
+              <div class="check">✓</div>
+              <span>Formation complète pour gérer votre site en autonomie</span>
+            </div>
+            <div class="commitment-item">
+              <div class="check">✓</div>
+              <span>Support technique réactif après la mise en ligne</span>
+            </div>
+            <div class="commitment-item">
+              <div class="check">✓</div>
+              <span>Code propre, optimisé et conforme aux standards</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <h2>Prêt à <em>collaborer ?</em></h2>
+      <p>Discutons de votre projet. La première consultation est offerte.</p>
+      <a href="index.html#contact" class="cta-btn"
+        ><span>Nous contacter</span><span>→</span></a
+      >
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="f-top">
+        <div class="f-logo">AD — <span>Studio Web</span></div>
+        <div class="f-socials">
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          <a href="#" aria-label="Behance">Behance</a>
+        </div>
+      </div>
+      <div class="f-divider"></div>
+      <div class="f-bottom">
+        <nav class="f-legal" aria-label="Liens légaux">
+          <a href="qui-sommes-nous.html" class="active">Qui sommes-nous</a>
+          <a href="politique-de-confidentialite.html"
+            >Politique de confidentialité</a
+          >
+        </nav>
+        <div class="f-copy">© 2026 AD Studio — Tous droits réservés</div>
+      </div>
+    </footer>
+
+    <script>
+      /* CURSOR */
+      const cur = document.getElementById("cur"),
+        curR = document.getElementById("curR");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cur.style.left = mx + "px";
+        cur.style.top = my + "px";
+      });
+      (function anim() {
+        rx += (mx - rx) * 0.1;
+        ry += (my - ry) * 0.1;
+        curR.style.left = rx + "px";
+        curR.style.top = ry + "px";
+        requestAnimationFrame(anim);
+      })();
+      document
+        .querySelectorAll("a,button,.value-card,.commitment-item")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            cur.style.width = "18px";
+            cur.style.height = "18px";
+            curR.style.width = "55px";
+            curR.style.height = "55px";
+            curR.style.borderColor = "rgba(184,151,90,.7)";
+          });
+          el.addEventListener("mouseleave", () => {
+            cur.style.width = "10px";
+            cur.style.height = "10px";
+            curR.style.width = "36px";
+            curR.style.height = "36px";
+            curR.style.borderColor = "rgba(240,237,232,.4)";
+          });
+        });
+
+      /* REVEAL */
+      const ro = new IntersectionObserver(
+        (e) =>
+          e.forEach((x) => {
+            if (x.isIntersecting) x.target.classList.add("visible");
+          }),
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => ro.observe(el));
+
+      /* COUNT UP */
+      document.querySelectorAll("[data-target]").forEach((el) => {
+        new IntersectionObserver(
+          ([e]) => {
+            if (!e.isIntersecting) return;
+            const t = +el.dataset.target,
+              step = t / 55;
+            let v = 0;
+            const tm = setInterval(() => {
+              v += step;
+              if (v >= t) {
+                v = t;
+                clearInterval(tm);
+              }
+              el.textContent = Math.floor(v);
+            }, 18);
+          },
+          { threshold: 0.5 },
+        ).observe(el);
+      });
+
+      /* SMOOTH ANCHOR */
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const t = document.querySelector(a.getAttribute("href"));
+          if (t) {
+            e.preventDefault();
+            t.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
