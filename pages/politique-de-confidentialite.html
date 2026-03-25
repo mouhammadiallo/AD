@@ -39,7 +39,7 @@
     <meta property="og:locale" content="fr_FR" />
 
     <!-- ═══ FAVICON ═══ -->
-    <link rel="icon" type="image/svg+xml" href="logo.png" />
+    <link rel="icon" type="image/svg+xml" href="../images/logo.png" />
 
     <!-- ═══ FONTS ═══ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -58,6 +58,8 @@
         --smoke: #1c1c1c;
         --mist: #2e2e2e;
         --dim: rgba(240, 237, 232, 0.35);
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         --fs-xs: clamp(0.55rem, 2vw, 0.65rem);
         --fs-sm: clamp(0.8rem, 2.5vw, 0.95rem);
         --fs-h2: clamp(1.8rem, 5vw, 3rem);
@@ -83,6 +85,8 @@
         font-family: "Playfair Display", serif;
         overflow-x: hidden;
         cursor: none;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       /* CURSOR */
@@ -93,6 +97,7 @@
         z-index: 9999;
         border-radius: 50%;
         transform: translate(-50%, -50%);
+        will-change: transform, width, height;
       }
       .cur {
         width: 10px;
@@ -114,11 +119,9 @@
           height 0.3s,
           border-color 0.3s;
       }
-      @media (hover: none) {
-        .cur,
-        .cur-r {
-          display: none;
-        }
+      @media (hover: none), (pointer: coarse) {
+        .cur, .cur-r { display: none !important; }
+        body { cursor: auto; }
       }
 
       /* NOISE */
@@ -144,6 +147,7 @@
         padding: 1.2rem 1.5rem;
         background: rgba(8, 8, 8, 0.92);
         backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         transition:
           background 0.4s,
           padding 0.4s;
@@ -273,6 +277,7 @@
         inset: 0;
         background: rgba(8, 8, 8, 0.97);
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         z-index: 490;
         display: flex;
         flex-direction: column;
@@ -700,7 +705,7 @@
       }
       .f-legal a {
         font-family: "DM Mono", monospace;
-        font-size: 0.48rem;
+        font-size: 0.52rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: rgba(240, 237, 232, 0.28);
@@ -715,7 +720,7 @@
       }
       .f-copy {
         font-family: "DM Mono", monospace;
-        font-size: 0.46rem;
+        font-size: 0.5rem;
         letter-spacing: 0.18em;
         color: rgba(240, 237, 232, 0.15);
         white-space: nowrap;
@@ -751,21 +756,54 @@
           transform: translateY(0);
         }
       }
+    
+      /* SKIP LINK */
+      .skip-link {
+        position: fixed;
+        top: -100%;
+        left: 1rem;
+        z-index: 10000;
+        padding: 0.8rem 1.5rem;
+        background: var(--gold);
+        color: var(--ink);
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        transition: top 0.3s;
+      }
+      .skip-link:focus { top: 1rem; }
+
+      /* FOCUS STYLES */
+      *:focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 3px;
+      }
+
+      /* REDUCED MOTION */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   </head>
   <body>
     <!-- CURSOR -->
-    <div class="cur" id="cur"></div>
-    <div class="cur-r" id="curR"></div>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <div class="cur" id="cur" aria-hidden="true"></div>
+    <div class="cur-r" id="curR" aria-hidden="true"></div>
 
     <!-- NAV -->
-    <nav id="nav">
-      <a href="AD.html" class="nav-logo">AD — <span>Studio Web</span></a>
+    <nav id="nav" aria-label="Navigation principale">
+      <a href="../AD.html" class="nav-logo">AD — <span>Studio Web</span></a>
       <a href="demarrer.html" class="nav-cta"><span>Démarrer</span></a>
       <button
         class="burger"
         id="burger"
-        aria-label="Menu"
+        aria-label="Ouvrir le menu" aria-controls="mobileMenu"
         aria-expanded="false"
       >
         <span></span><span></span><span></span>
@@ -774,7 +812,7 @@
 
     <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
-      <a href="AD.html">Accueil</a>
+      <a href="../AD.html">Accueil</a>
       <a href="qui-sommes-nous.html">Qui sommes-nous</a>
       <a href="politique-de-confidentialite.html" class="active"
         >Confidentialité</a
@@ -783,6 +821,7 @@
     </div>
 
     <!-- PAGE HERO -->
+    <main id="main-content">
     <section class="page-hero">
       <div class="hero-content">
         <div class="label">Légal</div>
@@ -1126,12 +1165,13 @@
             questions concernant la protection de vos données personnelles ou
             pour traiter vos demandes d'exercice de droits.
           </p>
-          <a href="mailto:privacy@adstudio.com" class="email"
-            >privacy@adstudio.com</a
+          <a href="mailto:privacy@adstudio.com" class="email">privacy@adstudio.com</a
           >
         </div>
       </div>
     </div>
+
+    </main>
 
     <!-- FOOTER -->
     <footer>
@@ -1163,7 +1203,11 @@
         const isOpen = burger.classList.toggle("open");
         mobileMenu.classList.toggle("open");
         burger.setAttribute("aria-expanded", isOpen);
+        burger.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
         document.body.style.overflow = isOpen ? "hidden" : "";
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileMenu.classList.contains("open")) burger.click();
       });
       mobileMenu.querySelectorAll("a").forEach((a) => {
         a.addEventListener("click", () => {
@@ -1217,7 +1261,7 @@
       const ro = new IntersectionObserver(
         (e) =>
           e.forEach((x) => {
-            if (x.isIntersecting) x.target.classList.add("visible");
+            if (x.isIntersecting) { x.target.classList.add("visible"); ro.unobserve(x.target); }
           }),
         { threshold: 0.1 },
       );
@@ -1227,10 +1271,7 @@
       document.querySelectorAll('a[href^="#"]').forEach((a) => {
         a.addEventListener("click", (e) => {
           const t = document.querySelector(a.getAttribute("href"));
-          if (t) {
-            e.preventDefault();
-            t.scrollIntoView({ behavior: "smooth" });
-          }
+          if (t) { e.preventDefault(); t.scrollIntoView({ behavior: "smooth" }); }
         });
       });
     </script>

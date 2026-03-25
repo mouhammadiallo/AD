@@ -1,0 +1,2474 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Démarrer un projet — AD Studio</title>
+    <meta
+      name="description"
+      content="Configurez votre projet web et obtenez une estimation instantanée."
+    />
+    <meta name="theme-color" content="#080808" />
+    <link rel="icon" type="image/svg+xml" href="../images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #080808;
+        --paper: #f0ede8;
+        --gold: #b8975a;
+        --gold2: #d4b07a;
+        --smoke: #1c1c1c;
+        --dim: rgba(240, 237, 232, 0.35);
+        --fs-xs: clamp(0.6rem, 1.8vw, 0.7rem);
+        --fs-sm: clamp(0.85rem, 2.5vw, 1rem);
+        --fs-md: clamp(1rem, 2.8vw, 1.15rem);
+        --fs-h2: clamp(1.8rem, 5vw, 3rem);
+        --fs-hero: clamp(2.4rem, 9vw, 6rem);
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--ink);
+        color: var(--paper);
+        font-family: "Playfair Display", serif;
+        overflow-x: hidden;
+        cursor: none;
+        -webkit-font-smoothing: antialiased;
+      }
+      .skip-link {
+        position: fixed;
+        top: -100%;
+        left: 1rem;
+        z-index: 10000;
+        padding: 0.8rem 1.5rem;
+        background: var(--gold);
+        color: var(--ink);
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        text-decoration: none;
+        transition: top 0.3s;
+      }
+      .skip-link:focus {
+        top: 1rem;
+      }
+      .cur,
+      .cur-r {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+      }
+      .cur {
+        width: 10px;
+        height: 10px;
+        background: var(--paper);
+        mix-blend-mode: difference;
+        transition:
+          width 0.25s var(--spring),
+          height 0.25s var(--spring);
+      }
+      .cur-r {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(240, 237, 232, 0.4);
+        transition:
+          width 0.3s var(--ease),
+          height 0.3s var(--ease),
+          border-color 0.3s;
+      }
+      @media (hover: none), (pointer: coarse) {
+        .cur,
+        .cur-r {
+          display: none !important;
+        }
+        body {
+          cursor: auto;
+        }
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9000;
+      }
+      nav#nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 1.5rem;
+        background: rgba(8, 8, 8, 0.92);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+      @media (min-width: 768px) {
+        nav#nav {
+          padding: 1.2rem 4rem;
+        }
+      }
+      .nav-logo {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--paper);
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: none;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      @media (min-width: 768px) {
+        .nav-links {
+          display: flex;
+        }
+      }
+      .nav-links a {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--paper);
+        text-decoration: none;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--gold);
+        transition: width 0.35s;
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+      .nav-cta {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 0.55rem 1.1rem;
+        border: 1px solid var(--gold);
+        background: rgba(184, 151, 90, 0.1);
+        color: var(--paper);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .nav-cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s var(--ease);
+      }
+      .nav-cta:hover::before {
+        transform: scaleX(1);
+      }
+      .nav-cta span {
+        position: relative;
+        z-index: 1;
+        transition: color 0.4s;
+      }
+      .nav-cta:hover span {
+        color: var(--ink);
+      }
+      .burger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24px;
+        height: 16px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        z-index: 600;
+      }
+      @media (min-width: 768px) {
+        .burger {
+          display: none;
+        }
+      }
+      .burger span {
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: var(--paper);
+        transition:
+          transform 0.35s var(--ease),
+          opacity 0.25s;
+      }
+      .burger.open span:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+      }
+      .burger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .burger.open span:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+      }
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 8, 8, 0.97);
+        backdrop-filter: blur(20px);
+        z-index: 490;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s var(--ease);
+      }
+      .mobile-menu.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      @media (min-width: 768px) {
+        .mobile-menu {
+          display: none;
+        }
+      }
+      .mobile-menu a {
+        font-family: "DM Mono", monospace;
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--paper);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .mobile-menu a:hover,
+      .mobile-menu a.active {
+        color: var(--gold);
+      }
+      .page-hero {
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 8rem 1.5rem 4rem;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--ink), var(--smoke));
+      }
+      @media (min-width: 768px) {
+        .page-hero {
+          padding: 10rem 4rem 5rem;
+        }
+      }
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 80%;
+        height: 150%;
+        background: radial-gradient(
+          ellipse,
+          rgba(184, 151, 90, 0.06),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1000px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .label {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        opacity: 0;
+        animation: fadeU 0.8s 0.3s forwards;
+      }
+      .label::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--gold);
+      }
+      .page-title {
+        font-size: var(--fs-hero);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        opacity: 0;
+        animation: fadeU 0.8s 0.5s forwards;
+      }
+      .page-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .page-intro {
+        margin-top: 2rem;
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        color: var(--dim);
+        line-height: 1.95;
+        max-width: 650px;
+        opacity: 0;
+        animation: fadeU 0.8s 0.7s forwards;
+      }
+      .trust-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+        opacity: 0;
+        animation: fadeU 0.8s 0.9s forwards;
+      }
+      .trust-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: rgba(240, 237, 232, 0.5);
+      }
+      .bi {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: rgba(184, 151, 90, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.5rem;
+        color: var(--gold);
+        flex-shrink: 0;
+      }
+      .progress-bar {
+        position: sticky;
+        top: 52px;
+        z-index: 100;
+        background: var(--smoke);
+        border-bottom: 1px solid rgba(240, 237, 232, 0.06);
+        padding: 1.2rem 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .progress-bar {
+          padding: 1.5rem 4rem;
+          top: 56px;
+        }
+      }
+      .progress-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .progress-steps {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+      }
+      .progress-steps::before {
+        content: "";
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        height: 1px;
+        background: rgba(240, 237, 232, 0.08);
+      }
+      .progress-fill {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        height: 1px;
+        background: var(--gold);
+        transition: width 0.6s var(--ease);
+        width: 0;
+      }
+      .p-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+      }
+      .p-dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 1px solid rgba(240, 237, 232, 0.15);
+        background: var(--smoke);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "DM Mono", monospace;
+        font-size: 0.55rem;
+        color: var(--dim);
+        transition: all 0.4s var(--ease);
+      }
+      .p-step.active .p-dot {
+        border-color: var(--gold);
+        color: var(--gold);
+        background: rgba(184, 151, 90, 0.1);
+        transform: scale(1.15);
+      }
+      .p-step.done .p-dot {
+        border-color: var(--gold);
+        background: var(--gold);
+        color: var(--ink);
+      }
+      .p-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.5rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(240, 237, 232, 0.2);
+        transition: color 0.3s;
+        white-space: nowrap;
+      }
+      .p-step.active .p-label {
+        color: var(--gold);
+      }
+      .p-step.done .p-label {
+        color: rgba(240, 237, 232, 0.5);
+      }
+      @media (max-width: 600px) {
+        .p-label {
+          display: none;
+        }
+      }
+      .wizard-body {
+        padding: 3rem 1.5rem 5rem;
+        min-height: 60vh;
+      }
+      @media (min-width: 768px) {
+        .wizard-body {
+          padding: 4rem 4rem 6rem;
+        }
+      }
+      .wiz-step {
+        display: none;
+        max-width: 900px;
+        margin: 0 auto;
+        animation: stepIn 0.5s var(--ease);
+      }
+      .wiz-step.active {
+        display: block;
+      }
+      @keyframes stepIn {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .step-header {
+        margin-bottom: 2.5rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+      @media (max-width: 768px) {
+        .step-header {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+      }
+      .step-header-text {
+        flex: 1;
+      }
+      .step-num {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--gold);
+        letter-spacing: 0.2em;
+        margin-bottom: 0.5rem;
+      }
+      .step-title {
+        font-size: clamp(1.5rem, 4vw, 2.2rem);
+        font-weight: 400;
+        line-height: 1.15;
+      }
+      .step-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .step-subtitle {
+        margin-top: 0.8rem;
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--dim);
+        line-height: 1.8;
+        max-width: 500px;
+      }
+      .step-img {
+        width: clamp(120px, 20vw, 200px);
+        height: clamp(120px, 20vw, 200px);
+        object-fit: cover;
+        flex-shrink: 0;
+        filter: brightness(0.6) saturate(0.7);
+        border: 1px solid rgba(240, 237, 232, 0.06);
+      }
+      @media (max-width: 768px) {
+        .step-img {
+          width: 100%;
+          height: 160px;
+        }
+      }
+      .field-group {
+        margin-bottom: 2.5rem;
+      }
+      .field-label {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .field-label .req {
+        color: var(--gold2);
+      }
+      .field-hint {
+        font-family: "DM Mono", monospace;
+        font-size: 0.55rem;
+        color: rgba(240, 237, 232, 0.2);
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+      }
+      .field-grid {
+        display: grid;
+        gap: 1rem;
+      }
+      .field-grid.cols-2 {
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 600px) {
+        .field-grid.cols-2 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .f-input {
+        width: 100%;
+        background: var(--smoke);
+        border: 1px solid rgba(240, 237, 232, 0.08);
+        color: var(--paper);
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        padding: 1rem 1.2rem;
+        outline: none;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+        -webkit-appearance: none;
+        border-radius: 0;
+      }
+      .f-input::placeholder {
+        color: rgba(240, 237, 232, 0.18);
+      }
+      .f-input:focus {
+        border-color: var(--gold);
+        background: rgba(28, 28, 28, 0.9);
+      }
+      select.f-input {
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23b8975a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1.2rem center;
+        padding-right: 2.8rem;
+      }
+      select.f-input option {
+        background: var(--smoke);
+        color: var(--paper);
+      }
+      textarea.f-input {
+        resize: vertical;
+        min-height: 130px;
+        line-height: 1.7;
+      }
+      .f-input.error {
+        border-color: rgba(220, 80, 80, 0.6);
+      }
+      .error-msg {
+        font-family: "DM Mono", monospace;
+        font-size: 0.55rem;
+        color: rgba(220, 80, 80, 0.8);
+        margin-top: 0.4rem;
+        display: none;
+      }
+      .has-error .error-msg {
+        display: block;
+      }
+      .visual-cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      @media (min-width: 500px) {
+        .visual-cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 800px) {
+        .visual-cards {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .v-card {
+        position: relative;
+        cursor: pointer;
+        border: 1px solid rgba(240, 237, 232, 0.08);
+        overflow: hidden;
+        transition:
+          border-color 0.35s,
+          transform 0.35s var(--spring);
+      }
+      .v-card:hover {
+        border-color: rgba(184, 151, 90, 0.3);
+        transform: translateY(-3px);
+      }
+      .v-card.selected {
+        border-color: var(--gold);
+      }
+      .v-card.selected::after {
+        content: "\2713";
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        width: 22px;
+        height: 22px;
+        background: var(--gold);
+        color: var(--ink);
+        font-size: 0.65rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        z-index: 3;
+        font-weight: 700;
+      }
+      .v-card input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .v-card-img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        filter: brightness(0.45) saturate(0.6);
+        transition:
+          filter 0.4s,
+          transform 0.5s var(--ease);
+      }
+      .v-card:hover .v-card-img {
+        filter: brightness(0.3) saturate(0.4);
+        transform: scale(1.05);
+      }
+      .v-card.selected .v-card-img {
+        filter: brightness(0.25) saturate(0.3);
+      }
+      .v-card-body {
+        padding: 1.2rem;
+        position: relative;
+        z-index: 2;
+      }
+      .v-card-icon {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      .v-card-name {
+        font-size: clamp(1rem, 2.5vw, 1.15rem);
+        font-weight: 400;
+        margin-bottom: 0.3rem;
+        transition: color 0.3s;
+      }
+      .v-card.selected .v-card-name {
+        color: var(--gold);
+      }
+      .v-card-desc {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--dim);
+        line-height: 1.7;
+      }
+      .v-card-price {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--gold);
+        margin-top: 0.6rem;
+        opacity: 0.7;
+      }
+      .pill-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+      }
+      .pill {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.75rem 1.2rem;
+        border: 1px solid rgba(240, 237, 232, 0.1);
+        cursor: pointer;
+        transition:
+          border-color 0.25s,
+          background 0.25s,
+          transform 0.2s var(--spring);
+        position: relative;
+      }
+      .pill:hover {
+        border-color: rgba(184, 151, 90, 0.3);
+      }
+      .pill input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .pill-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 1px solid rgba(240, 237, 232, 0.25);
+        flex-shrink: 0;
+        transition: all 0.25s;
+      }
+      .pill.selected {
+        border-color: rgba(184, 151, 90, 0.4);
+        background: rgba(184, 151, 90, 0.06);
+        transform: scale(1.02);
+      }
+      .pill.selected .pill-dot {
+        border-color: var(--gold);
+        background: var(--gold);
+        box-shadow: inset 0 0 0 2px var(--ink);
+      }
+      .pill-text {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--dim);
+        transition: color 0.25s;
+      }
+      .pill.selected .pill-text {
+        color: var(--paper);
+      }
+      .check-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+      }
+      @media (min-width: 500px) {
+        .check-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 800px) {
+        .check-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+      .chk {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.8rem 1rem;
+        border: 1px solid rgba(240, 237, 232, 0.06);
+        background: var(--smoke);
+        cursor: pointer;
+        transition:
+          border-color 0.25s,
+          background 0.25s;
+        position: relative;
+      }
+      .chk:hover {
+        border-color: rgba(184, 151, 90, 0.25);
+      }
+      .chk input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .chk-box {
+        width: 16px;
+        height: 16px;
+        border: 1px solid rgba(240, 237, 232, 0.2);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s;
+      }
+      .chk.selected {
+        border-color: rgba(184, 151, 90, 0.4);
+        background: rgba(184, 151, 90, 0.06);
+      }
+      .chk.selected .chk-box {
+        border-color: var(--gold);
+        background: var(--gold);
+      }
+      .chk.selected .chk-box::after {
+        content: "";
+        width: 8px;
+        height: 5px;
+        border-left: 1.5px solid var(--ink);
+        border-bottom: 1.5px solid var(--ink);
+        transform: rotate(-45deg) translateY(-1px);
+      }
+      .chk-text {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--dim);
+        transition: color 0.25s;
+        line-height: 1.4;
+      }
+      .chk.selected .chk-text {
+        color: var(--paper);
+      }
+      .chk-price {
+        margin-left: auto;
+        font-family: "DM Mono", monospace;
+        font-size: 0.5rem;
+        color: var(--gold);
+        opacity: 0.6;
+        white-space: nowrap;
+      }
+      .price-estimator {
+        position: sticky;
+        bottom: 0;
+        z-index: 100;
+        background: rgba(8, 8, 8, 0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-top: 1px solid rgba(184, 151, 90, 0.15);
+        padding: 1rem 1.5rem;
+        transform: translateY(100%);
+        transition: transform 0.5s var(--ease);
+      }
+      .price-estimator.visible {
+        transform: translateY(0);
+      }
+      @media (min-width: 768px) {
+        .price-estimator {
+          padding: 1.2rem 4rem;
+        }
+      }
+      .price-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .price-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      .price-tag {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--dim);
+      }
+      .price-amount {
+        font-size: clamp(1.3rem, 4vw, 1.8rem);
+        font-weight: 400;
+        color: var(--gold);
+      }
+      .price-amount .currency {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--dim);
+      }
+      .price-conv {
+        font-family: "DM Mono", monospace;
+        font-size: 0.5rem;
+        color: rgba(240, 237, 232, 0.25);
+      }
+      .price-disc {
+        font-family: "DM Mono", monospace;
+        font-size: 0.5rem;
+        color: rgba(240, 237, 232, 0.2);
+      }
+      .wiz-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(240, 237, 232, 0.06);
+      }
+      .btn-prev,
+      .btn-next,
+      .btn-submit {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 0.9rem 1.8rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .btn-prev {
+        background: none;
+        border: 1px solid rgba(240, 237, 232, 0.12);
+        color: var(--dim);
+      }
+      .btn-prev:hover {
+        border-color: rgba(240, 237, 232, 0.3);
+        color: var(--paper);
+      }
+      .btn-next,
+      .btn-submit {
+        background: var(--gold);
+        color: var(--ink);
+        border: 1px solid var(--gold);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .btn-next::after {
+        content: "\2192";
+        transition: transform 0.3s;
+      }
+      .btn-next:hover::after {
+        transform: translateX(4px);
+      }
+      .btn-next:hover,
+      .btn-submit:hover {
+        transform: scale(1.02);
+      }
+      .btn-hidden {
+        visibility: hidden;
+      }
+      .summary-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .summary-card {
+        background: var(--smoke);
+        border: 1px solid rgba(240, 237, 232, 0.06);
+        padding: 1.5rem;
+      }
+      .summary-label {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.8rem;
+      }
+      .summary-value {
+        font-size: var(--fs-md);
+        line-height: 1.6;
+      }
+      .summary-value.mono {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        color: var(--dim);
+      }
+      .summary-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .summary-tag {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        padding: 0.35rem 0.7rem;
+        border: 1px solid rgba(184, 151, 90, 0.2);
+        color: var(--gold);
+        background: rgba(184, 151, 90, 0.05);
+      }
+      .price-breakdown {
+        background: linear-gradient(
+          135deg,
+          rgba(184, 151, 90, 0.08),
+          var(--smoke)
+        );
+        border: 1px solid rgba(184, 151, 90, 0.2);
+        padding: 2rem;
+      }
+      .breakdown-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.6rem 0;
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        color: var(--dim);
+      }
+      .breakdown-row:not(:last-child) {
+        border-bottom: 1px solid rgba(240, 237, 232, 0.04);
+      }
+      .breakdown-row.total {
+        color: var(--paper);
+        font-size: var(--fs-sm);
+        border-top: 1px solid rgba(184, 151, 90, 0.3);
+        margin-top: 0.5rem;
+        padding-top: 1rem;
+      }
+      .breakdown-row.total .bp {
+        color: var(--gold);
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
+        font-family: "Playfair Display", serif;
+      }
+      .success-screen {
+        display: none;
+        text-align: center;
+        padding: 6rem 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .success-screen.visible {
+        display: block;
+        animation: stepIn 0.6s var(--ease);
+      }
+      .success-icon {
+        font-size: 3.5rem;
+        margin-bottom: 2rem;
+      }
+      .success-screen h2 {
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 400;
+        margin-bottom: 1rem;
+      }
+      .success-screen h2 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .success-screen p {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-sm);
+        color: var(--dim);
+        line-height: 1.9;
+        margin-bottom: 2rem;
+      }
+      .success-back {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(184, 151, 90, 0.3);
+        padding-bottom: 0.2rem;
+      }
+      footer {
+        border-top: 1px solid rgba(240, 237, 232, 0.05);
+        padding: 3rem 1.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+      @media (min-width: 768px) {
+        footer {
+          padding: 3.5rem 4rem 2.5rem;
+        }
+      }
+      .f-top {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+      @media (min-width: 600px) {
+        .f-top {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+      .f-logo {
+        font-family: "DM Mono", monospace;
+        font-size: var(--fs-xs);
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--dim);
+      }
+      .f-logo span {
+        color: var(--gold);
+      }
+      .f-socials {
+        display: flex;
+        gap: 1.4rem;
+      }
+      .f-socials a {
+        font-family: "DM Mono", monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--dim);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .f-socials a:hover {
+        color: var(--gold);
+      }
+      .f-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(240, 237, 232, 0.05);
+      }
+      .f-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      @media (min-width: 600px) {
+        .f-bottom {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+      .f-legal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem 2rem;
+      }
+      .f-legal a {
+        font-family: "DM Mono", monospace;
+        font-size: 0.52rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(240, 237, 232, 0.28);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .f-legal a:hover {
+        color: var(--gold);
+      }
+      .f-copy {
+        font-family: "DM Mono", monospace;
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        color: rgba(240, 237, 232, 0.15);
+      }
+      @keyframes fadeU {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      *:focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 3px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <div class="cur" id="cur" aria-hidden="true"></div>
+    <div class="cur-r" id="curR" aria-hidden="true"></div>
+    <nav id="nav" aria-label="Navigation">
+      <a href="../AD.html" class="nav-logo">AD — <span>Studio Web</span></a>
+      <ul class="nav-links">
+        <li><a href="../AD.html#services">Services</a></li>
+        <li><a href="../AD.html#work">Réalisations</a></li>
+        <li><a href="comment-ca-marche.html">Comment ça marche</a></li>
+      </ul>
+      <a href="demarrer.html" class="nav-cta"><span>Démarrer →</span></a
+      ><button
+        class="burger"
+        id="burger"
+        aria-label="Menu"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
+      <a href="../AD.html">Accueil</a><a href="../AD.html#services">Services</a
+      ><a href="comment-ca-marche.html">Comment ça marche</a
+      ><a href="demarrer.html" class="active">Démarrer →</a>
+    </div>
+    <section class="page-hero">
+      <div class="hero-content">
+        <div class="label">Démarrer un projet</div>
+        <h1 class="page-title">Configurez votre<br /><em>projet idéal.</em></h1>
+        <p class="page-intro">
+          Répondez à quelques questions pour nous aider à comprendre votre
+          vision. Estimation indicative en temps réel. Aucun engagement.
+        </p>
+        <div class="trust-badges">
+          <div class="trust-badge">
+            <div class="bi"></div>
+            Devis gratuit
+          </div>
+          <div class="trust-badge">
+            <div class="bi"></div>
+            Réponse sous 48h
+          </div>
+          <div class="trust-badge">
+            <div class="bi"></div>
+            Confidentiel
+          </div>
+          <div class="trust-badge">
+            <div class="bi"></div>
+            Sans engagement
+          </div>
+        </div>
+      </div>
+    </section>
+    <main id="main-content">
+      <div class="progress-bar">
+        <div class="progress-inner">
+          <div class="progress-steps">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="p-step active" data-step="0">
+              <div class="p-dot">1</div>
+              <div class="p-label">Vous</div>
+            </div>
+            <div class="p-step" data-step="1">
+              <div class="p-dot">2</div>
+              <div class="p-label">Projet</div>
+            </div>
+            <div class="p-step" data-step="2">
+              <div class="p-dot">3</div>
+              <div class="p-label">Options</div>
+            </div>
+            <div class="p-step" data-step="3">
+              <div class="p-dot">4</div>
+              <div class="p-label">Design</div>
+            </div>
+            <div class="p-step" data-step="4">
+              <div class="p-dot">5</div>
+              <div class="p-label">Détails</div>
+            </div>
+            <div class="p-step" data-step="5">
+              <div class="p-dot">6</div>
+              <div class="p-label">Résumé</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-body">
+        <form id="wizForm" novalidate>
+          <!-- STEP 0 -->
+          <div class="wiz-step active" data-index="0">
+            <div class="step-header">
+              <div class="step-header-text">
+                <div class="step-num">Étape 01</div>
+                <h2 class="step-title">Parlez-nous de <em>vous</em></h2>
+                <p class="step-subtitle">
+                  Ces infos nous permettent de personnaliser notre proposition.
+                </p>
+              </div>
+              <img
+                src="../images/equipe.jpg"
+                alt="Équipe"
+                class="step-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="field-group">
+              <div class="field-grid cols-2">
+                <div class="f-field">
+                  <label class="field-label"
+                    >Prénom & Nom <span class="req">*</span></label
+                  ><input
+                    type="text"
+                    name="nom"
+                    class="f-input"
+                    placeholder="Latyr Diop"
+                    required
+                  /><span class="error-msg">Requis.</span>
+                </div>
+                <div class="f-field">
+                  <label class="field-label"
+                    >Email <span class="req">*</span></label
+                  ><input
+                    type="email"
+                    name="email"
+                    class="f-input"
+                    placeholder="latyr@entreprise.com"
+                    required
+                  /><span class="error-msg">Email invalide.</span>
+                </div>
+                <div class="f-field">
+                  <label class="field-label">Téléphone / WhatsApp</label
+                  ><input
+                    type="tel"
+                    name="telephone"
+                    class="f-input"
+                    placeholder="+221 77 123 45 67"
+                  />
+                </div>
+                <div class="f-field">
+                  <label class="field-label">Entreprise</label
+                  ><input
+                    type="text"
+                    name="entreprise"
+                    class="f-input"
+                    placeholder="Votre structure"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="field-group">
+              <div class="field-grid cols-2">
+                <div class="f-field">
+                  <label class="field-label"
+                    >Secteur <span class="req">*</span></label
+                  ><select name="secteur" class="f-input" required>
+                    <option value="">— Sélectionner —</option>
+                    <option>Commerce & Vente</option>
+                    <option>Restauration</option>
+                    <option>Mode & Beauté</option>
+                    <option>Santé</option>
+                    <option>Éducation</option>
+                    <option>Immobilier</option>
+                    <option>Finance</option>
+                    <option>Tech & Startups</option>
+                    <option>ONG</option>
+                    <option>Arts & Culture</option>
+                    <option>Tourisme</option>
+                    <option>BTP</option>
+                    <option>Juridique</option>
+                    <option>Freelance</option>
+                    <option>Autre</option></select
+                  ><span class="error-msg">Requis.</span>
+                </div>
+                <div class="f-field">
+                  <label class="field-label">Site actuel</label
+                  ><input
+                    type="url"
+                    name="site_actuel"
+                    class="f-input"
+                    placeholder="https://monsite.com"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="wiz-nav">
+              <button type="button" class="btn-prev btn-hidden" disabled>
+                ← Retour</button
+              ><button type="button" class="btn-next" onclick="nextStep()">
+                Suivant
+              </button>
+            </div>
+          </div>
+          <!-- STEP 1 -->
+          <div class="wiz-step" data-index="1">
+            <div class="step-header">
+              <div class="step-header-text">
+                <div class="step-num">Étape 02</div>
+                <h2 class="step-title">Quel type de <em>site</em> ?</h2>
+                <p class="step-subtitle">
+                  Sélectionnez le type qui correspond à votre besoin.
+                </p>
+              </div>
+              <img
+                src="../images/im2.jpg"
+                alt="Dev"
+                class="step-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="field-group">
+              <div class="visual-cards" id="typeCards">
+                <label class="v-card"
+                  ><input
+                    type="radio"
+                    name="type_site"
+                    value="vitrine"
+                    data-price="300000"
+                    required
+                  /><img
+                    src="../images/5image.jpg"
+                    alt="Vitrine"
+                    class="v-card-img"
+                    loading="lazy"
+                  />
+                  <div class="v-card-body">
+                    
+                    <div class="v-card-name">Site Vitrine</div>
+                    <div class="v-card-desc">
+                      Présentez votre activité avec élégance.
+                    </div>
+                    <div class="v-card-price">À partir de 300 000 FCFA</div>
+                  </div></label
+                ><label class="v-card"
+                  ><input
+                    type="radio"
+                    name="type_site"
+                    value="ecommerce"
+                    data-price="800000"
+                  /><img
+                    src="../images/2image.png"
+                    alt="E-commerce"
+                    class="v-card-img"
+                    loading="lazy"
+                  />
+                  <div class="v-card-body">
+                    
+                    <div class="v-card-name">E-Commerce</div>
+                    <div class="v-card-desc">
+                      Boutique en ligne avec paiement.
+                    </div>
+                    <div class="v-card-price">À partir de 800 000 FCFA</div>
+                  </div></label
+                ><label class="v-card"
+                  ><input
+                    type="radio"
+                    name="type_site"
+                    value="landing"
+                    data-price="200000"
+                  /><img
+                    src="../images/4image.jpeg"
+                    alt="Landing"
+                    class="v-card-img"
+                    loading="lazy"
+                  />
+                  <div class="v-card-body">
+                    
+                    <div class="v-card-name">Landing Page</div>
+                    <div class="v-card-desc">
+                      Une page conçue pour convertir.
+                    </div>
+                    <div class="v-card-price">À partir de 200 000 FCFA</div>
+                  </div></label
+                ><label class="v-card"
+                  ><input
+                    type="radio"
+                    name="type_site"
+                    value="portfolio"
+                    data-price="350000"
+                  /><img
+                    src="../images/7image.png"
+                    alt="Portfolio"
+                    class="v-card-img"
+                    loading="lazy"
+                  />
+                  <div class="v-card-body">
+                    
+                    <div class="v-card-name">Portfolio</div>
+                    <div class="v-card-desc">
+                      Mettez en valeur vos créations.
+                    </div>
+                    <div class="v-card-price">À partir de 350 000 FCFA</div>
+                  </div></label
+                ><label class="v-card"
+                  ><input
+                    type="radio"
+                    name="type_site"
+                    value="webapp"
+                    data-price="1500000"
+                  /><img
+                    src="../images/6image.png"
+                    alt="App"
+                    class="v-card-img"
+                    loading="lazy"
+                  />
+                  <div class="v-card-body">
+                    
+                    <div class="v-card-name">Application Web</div>
+                    <div class="v-card-desc">
+                      Dashboard, SaaS, outil métier.
+                    </div>
+                    <div class="v-card-price">À partir de 1 500 000 FCFA</div>
+                  </div></label
+                ><label class="v-card"
+                  ><input
+                    type="radio"
+                    name="type_site"
+                    value="refonte"
+                    data-price="400000"
+                  /><img
+                    src="../images/3image.png"
+                    alt="Refonte"
+                    class="v-card-img"
+                    loading="lazy"
+                  />
+                  <div class="v-card-body">
+                    
+                    <div class="v-card-name">Refonte</div>
+                    <div class="v-card-desc">
+                      Modernisez votre site existant.
+                    </div>
+                    <div class="v-card-price">À partir de 400 000 FCFA</div>
+                  </div></label
+                >
+              </div>
+              <span class="error-msg" id="typeError" style="display: none"
+                >Veuillez sélectionner un type.</span
+              >
+            </div>
+            <div class="field-group">
+              <label class="field-label">Nombre de pages</label>
+              <div class="pill-grid">
+                <label class="pill"
+                  ><input
+                    type="radio"
+                    name="nb_pages"
+                    value="1-5"
+                    data-price-mod="0"
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">1–5 pages</span></label
+                ><label class="pill"
+                  ><input
+                    type="radio"
+                    name="nb_pages"
+                    value="5-10"
+                    data-price-mod="100000"
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">5–10</span></label
+                ><label class="pill"
+                  ><input
+                    type="radio"
+                    name="nb_pages"
+                    value="10-20"
+                    data-price-mod="250000"
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">10–20</span></label
+                ><label class="pill"
+                  ><input
+                    type="radio"
+                    name="nb_pages"
+                    value="20+"
+                    data-price-mod="500000"
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">20+</span></label
+                >
+              </div>
+            </div>
+            <div class="wiz-nav">
+              <button type="button" class="btn-prev" onclick="prevStep()">
+                ← Retour</button
+              ><button type="button" class="btn-next" onclick="nextStep()">
+                Suivant
+              </button>
+            </div>
+          </div>
+          <!-- STEP 2 -->
+          <div class="wiz-step" data-index="2">
+            <div class="step-header">
+              <div class="step-header-text">
+                <div class="step-num">Étape 03</div>
+                <h2 class="step-title">Quelles <em>fonctionnalités</em> ?</h2>
+                <p class="step-subtitle">
+                  Cochez tout ce qui vous intéresse. Chaque option influence
+                  l'estimation.
+                </p>
+              </div>
+              <img
+                src="../images/im3.jpg"
+                alt="Features"
+                class="step-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="field-group">
+              <div class="check-grid">
+                <label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="formulaire"
+                    data-price="0"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Formulaire de contact</span
+                  ><span class="chk-price">Inclus</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="galerie"
+                    data-price="30000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Galerie photos</span
+                  ><span class="chk-price">+30K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="blog"
+                    data-price="80000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Blog / Actualités</span
+                  ><span class="chk-price">+80K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="boutique"
+                    data-price="200000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Boutique en ligne</span
+                  ><span class="chk-price">+200K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="paiement"
+                    data-price="100000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Paiement (Stripe, Wave)</span
+                  ><span class="chk-price">+100K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="reservation"
+                    data-price="120000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Réservation / RDV</span
+                  ><span class="chk-price">+120K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="membre"
+                    data-price="150000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Espace membre</span
+                  ><span class="chk-price">+150K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="multilingue"
+                    data-price="100000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Multilingue</span
+                  ><span class="chk-price">+100K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="chat"
+                    data-price="50000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Chat / WhatsApp</span
+                  ><span class="chk-price">+50K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="seo"
+                    data-price="80000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">SEO avancé</span
+                  ><span class="chk-price">+80K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="analytics"
+                    data-price="30000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Analytics</span
+                  ><span class="chk-price">+30K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="newsletter"
+                    data-price="50000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Newsletter</span
+                  ><span class="chk-price">+50K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="carte"
+                    data-price="20000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Google Maps</span
+                  ><span class="chk-price">+20K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="animations"
+                    data-price="100000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Animations premium</span
+                  ><span class="chk-price">+100K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="cms"
+                    data-price="80000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">CMS</span
+                  ><span class="chk-price">+80K</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="maintenance"
+                    data-price="50000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Maintenance mensuelle</span
+                  ><span class="chk-price">+50K/mois</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="hebergement"
+                    data-price="0"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">Hébergement inclus</span
+                  ><span class="chk-price">Inclus</span></label
+                ><label class="chk"
+                  ><input
+                    type="checkbox"
+                    name="features"
+                    value="api"
+                    data-price="200000"
+                  /><span class="chk-box"></span
+                  ><span class="chk-text">API & intégrations</span
+                  ><span class="chk-price">+200K</span></label
+                >
+              </div>
+            </div>
+            <div class="wiz-nav">
+              <button type="button" class="btn-prev" onclick="prevStep()">
+                ← Retour</button
+              ><button type="button" class="btn-next" onclick="nextStep()">
+                Suivant
+              </button>
+            </div>
+          </div>
+          <!-- STEP 3 -->
+          <div class="wiz-step" data-index="3">
+            <div class="step-header">
+              <div class="step-header-text">
+                <div class="step-num">Étape 04</div>
+                <h2 class="step-title">Préférences <em>visuelles</em></h2>
+                <p class="step-subtitle">
+                  Aidez-nous à cerner votre univers graphique.
+                </p>
+              </div>
+              <img
+                src="../images/im6.jpg"
+                alt="Design"
+                class="step-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="field-group">
+              <label class="field-label">Style graphique</label>
+              <div class="pill-grid">
+                <label class="pill"
+                  ><input type="radio" name="style" value="moderne" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Moderne & épuré</span></label
+                ><label class="pill"
+                  ><input type="radio" name="style" value="luxe" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Luxe & premium</span></label
+                ><label class="pill"
+                  ><input type="radio" name="style" value="colore" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Coloré & dynamique</span></label
+                ><label class="pill"
+                  ><input type="radio" name="style" value="minimaliste" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Minimaliste</span></label
+                ><label class="pill"
+                  ><input type="radio" name="style" value="corporate" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Corporate</span></label
+                ><label class="pill"
+                  ><input type="radio" name="style" value="creatif" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Créatif</span></label
+                ><label class="pill"
+                  ><input type="radio" name="style" value="africain" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Inspiration africaine</span></label
+                >
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Couleurs de marque</label
+              ><input
+                type="text"
+                name="couleurs"
+                class="f-input"
+                placeholder="Ex : bleu #003366, or #c9a84c"
+              />
+            </div>
+            <div class="field-group">
+              <label class="field-label">Sites de référence</label
+              ><textarea
+                name="references"
+                class="f-input"
+                placeholder="Liens ou noms de sites que vous aimez…"
+              ></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label"
+                >Contenu disponible ? <span class="req">*</span></label
+              >
+              <div class="pill-grid">
+                <label class="pill"
+                  ><input
+                    type="radio"
+                    name="contenu"
+                    value="oui"
+                    required
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">Oui, textes + images</span></label
+                ><label class="pill"
+                  ><input type="radio" name="contenu" value="partiel" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Partiellement</span></label
+                ><label class="pill"
+                  ><input type="radio" name="contenu" value="non" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Besoin d'aide</span></label
+                >
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Domaine</label>
+              <div class="pill-grid">
+                <label class="pill"
+                  ><input type="radio" name="domaine" value="oui" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">J'ai un domaine</span></label
+                ><label class="pill"
+                  ><input type="radio" name="domaine" value="non" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">À acheter</span></label
+                ><label class="pill"
+                  ><input type="radio" name="domaine" value="nsp" /><span
+                    class="pill-dot"
+                  ></span
+                  ><span class="pill-text">Je ne sais pas</span></label
+                >
+              </div>
+            </div>
+            <div class="wiz-nav">
+              <button type="button" class="btn-prev" onclick="prevStep()">
+                ← Retour</button
+              ><button type="button" class="btn-next" onclick="nextStep()">
+                Suivant
+              </button>
+            </div>
+          </div>
+          <!-- STEP 4 -->
+          <div class="wiz-step" data-index="4">
+            <div class="step-header">
+              <div class="step-header-text">
+                <div class="step-num">Étape 05</div>
+                <h2 class="step-title">Les derniers <em>détails</em></h2>
+                <p class="step-subtitle">
+                  Plus vous êtes précis, meilleure sera notre proposition.
+                </p>
+              </div>
+              <img
+                src="../images/im5.jpg"
+                alt="Détails"
+                class="step-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="field-group">
+              <label class="field-label"
+                >Délai <span class="req">*</span></label
+              >
+              <div class="pill-grid">
+                <label class="pill"
+                  ><input
+                    type="radio"
+                    name="delai"
+                    value="urgent"
+                    data-price-mod="150000"
+                    required
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">Urgent (+150K)</span></label
+                ><label class="pill"
+                  ><input
+                    type="radio"
+                    name="delai"
+                    value="1mois"
+                    data-price-mod="0"
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">1 mois</span></label
+                ><label class="pill"
+                  ><input
+                    type="radio"
+                    name="delai"
+                    value="2mois"
+                    data-price-mod="0"
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">2 mois</span></label
+                ><label class="pill"
+                  ><input
+                    type="radio"
+                    name="delai"
+                    value="3mois"
+                    data-price-mod="-50000"
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">3 mois (-50K)</span></label
+                ><label class="pill"
+                  ><input
+                    type="radio"
+                    name="delai"
+                    value="flexible"
+                    data-price-mod="0"
+                  /><span class="pill-dot"></span
+                  ><span class="pill-text">Flexible</span></label
+                >
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Public cible</label
+              ><textarea
+                name="public_cible"
+                class="f-input"
+                placeholder="Décrivez vos clients idéaux…"
+              ></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label"
+                >Description <span class="req">*</span></label
+              >
+              <div class="field-hint">Objectifs, contexte, attentes</div>
+              <textarea
+                name="description"
+                class="f-input"
+                style="min-height: 180px"
+                placeholder="Parlez-nous de votre projet…"
+                required
+              ></textarea
+              ><span class="error-msg">Requis.</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Source</label
+              ><select name="source" class="f-input">
+                <option value="">— Comment nous avez-vous connu ? —</option>
+                <option>Bouche à oreille</option>
+                <option>Instagram</option>
+                <option>LinkedIn</option>
+                <option>Google</option>
+                <option>Behance</option>
+                <option>Autre</option>
+              </select>
+            </div>
+            <div class="wiz-nav">
+              <button type="button" class="btn-prev" onclick="prevStep()">
+                ← Retour</button
+              ><button type="button" class="btn-next" onclick="nextStep()">
+                Voir le résumé
+              </button>
+            </div>
+          </div>
+          <!-- STEP 5 -->
+          <div class="wiz-step" data-index="5">
+            <div class="step-header">
+              <div class="step-header-text">
+                <div class="step-num">Étape 06</div>
+                <h2 class="step-title">Votre <em>récapitulatif</em></h2>
+                <p class="step-subtitle">Vérifiez avant d'envoyer.</p>
+              </div>
+            </div>
+            <div class="summary-grid" id="summaryContent"></div>
+            <div
+              class="price-breakdown"
+              id="priceBreakdown"
+              style="margin-top: 2rem"
+            ></div>
+            <div class="wiz-nav" style="margin-top: 2rem">
+              <button type="button" class="btn-prev" onclick="prevStep()">
+                ← Modifier</button
+              ><button type="submit" class="btn-submit">
+                Envoyer ma demande
+              </button>
+            </div>
+            <p
+              style="
+                margin-top: 1.5rem;
+                font-family: &quot;DM Mono&quot;, monospace;
+                font-size: var(--fs-xs);
+                color: var(--dim);
+                line-height: 1.8;
+              "
+            >
+              En soumettant, vous acceptez notre
+              <a
+                href="politique-de-confidentialite.html"
+                style="color: var(--gold); text-decoration: none"
+                >politique de confidentialité</a
+              >. Réponse sous <strong style="color: var(--paper)">48h</strong>.
+            </p>
+          </div>
+        </form>
+        <div class="success-screen" id="successScreen">
+          <div class="success-icon"></div>
+          <h2>Demande <em>envoyée !</em></h2>
+          <p>
+            Merci ! Nous vous répondrons sous <strong>24h</strong> avec une
+            proposition personnalisée.
+          </p>
+          <a href="../AD.html" class="success-back">← Retour à l'accueil</a>
+        </div>
+      </div>
+      <div class="price-estimator" id="priceBar">
+        <div class="price-inner">
+          <div class="price-left">
+            <div class="price-tag">Estimation indicative</div>
+            <div class="price-amount">
+              <span id="priceDisplay">—</span>
+              <span class="currency">FCFA</span>
+            </div>
+            <div class="price-conv" id="priceConv"></div>
+          </div>
+          <div class="price-disc">* Non contractuel</div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="f-top">
+        <div class="f-logo">AD — <span>Studio Web</span></div>
+        <div class="f-socials">
+          <a href="#">Instagram</a><a href="#">LinkedIn</a
+          ><a href="#">Behance</a>
+        </div>
+      </div>
+      <div class="f-divider"></div>
+      <div class="f-bottom">
+        <nav class="f-legal">
+          <a href="qui-sommes-nous.html">Qui sommes-nous</a
+          ><a href="politique-de-confidentialite.html">Confidentialité</a>
+        </nav>
+        <div class="f-copy">© 2026 AD Studio</div>
+      </div>
+    </footer>
+    <script>
+      /* Burger */
+      const burger = document.getElementById("burger"),
+        mm = document.getElementById("mobileMenu");
+      burger.addEventListener("click", () => {
+        const o = burger.classList.toggle("open");
+        mm.classList.toggle("open");
+        burger.setAttribute("aria-expanded", o);
+        document.body.style.overflow = o ? "hidden" : "";
+      });
+      mm.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          burger.classList.remove("open");
+          mm.classList.remove("open");
+          burger.setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "";
+        }),
+      );
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mm.classList.contains("open")) burger.click();
+      });
+
+      /* Cursor */
+      if (window.matchMedia("(hover:hover)").matches) {
+        const c = document.getElementById("cur"),
+          r = document.getElementById("curR");
+        let mx = 0,
+          my = 0,
+          rx = 0,
+          ry = 0;
+        document.addEventListener(
+          "mousemove",
+          (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+            c.style.left = mx + "px";
+            c.style.top = my + "px";
+          },
+          { passive: true },
+        );
+        (function a() {
+          rx += (mx - rx) * 0.12;
+          ry += (my - ry) * 0.12;
+          r.style.left = rx + "px";
+          r.style.top = ry + "px";
+          requestAnimationFrame(a);
+        })();
+        document
+          .querySelectorAll("a,button,.v-card,.pill,.chk")
+          .forEach((el) => {
+            el.addEventListener("mouseenter", () => {
+              c.style.width = "18px";
+              c.style.height = "18px";
+              r.style.width = "55px";
+              r.style.height = "55px";
+              r.style.borderColor = "rgba(184,151,90,.7)";
+            });
+            el.addEventListener("mouseleave", () => {
+              c.style.width = "10px";
+              c.style.height = "10px";
+              r.style.width = "36px";
+              r.style.height = "36px";
+              r.style.borderColor = "rgba(240,237,232,.4)";
+            });
+          });
+      }
+
+      /* State */
+      let cur = 0;
+      const tot = 6,
+        steps = document.querySelectorAll(".wiz-step"),
+        pSteps = document.querySelectorAll(".p-step"),
+        pFill = document.getElementById("progressFill"),
+        pBar = document.getElementById("priceBar"),
+        pDisp = document.getElementById("priceDisplay"),
+        pConv = document.getElementById("priceConv"),
+        form = document.getElementById("wizForm");
+
+      /* UI Bindings */
+      document.querySelectorAll(".v-card input[type=radio]").forEach((i) => {
+        i.addEventListener("change", () => {
+          i.closest(".visual-cards")
+            .querySelectorAll(".v-card")
+            .forEach((c) => c.classList.remove("selected"));
+          i.closest(".v-card").classList.add("selected");
+          document.getElementById("typeError").style.display = "none";
+          updatePrice();
+        });
+      });
+      document.querySelectorAll(".pill input[type=radio]").forEach((i) => {
+        i.addEventListener("change", () => {
+          i.closest(".pill-grid")
+            .querySelectorAll(".pill")
+            .forEach((p) => p.classList.remove("selected"));
+          i.closest(".pill").classList.add("selected");
+          updatePrice();
+        });
+      });
+      document.querySelectorAll(".chk input[type=checkbox]").forEach((i) => {
+        i.addEventListener("change", () => {
+          i.closest(".chk").classList.toggle("selected", i.checked);
+          updatePrice();
+        });
+      });
+
+      /* Price */
+      const E2 = 0.00152,
+        U2 = 0.00166;
+      function fmt(n) {
+        return n.toLocaleString("fr-FR");
+      }
+      function updatePrice() {
+        let t = 0;
+        const tr = form.querySelector('[name="type_site"]:checked');
+        if (tr) t += parseInt(tr.dataset.price) || 0;
+        const pr = form.querySelector('[name="nb_pages"]:checked');
+        if (pr) t += parseInt(pr.dataset.priceMod) || 0;
+        form.querySelectorAll('[name="features"]:checked').forEach((c) => {
+          t += parseInt(c.dataset.price) || 0;
+        });
+        const dr = form.querySelector('[name="delai"]:checked');
+        if (dr) t += parseInt(dr.dataset.priceMod) || 0;
+        if (t > 0) {
+          pBar.classList.add("visible");
+          const l = Math.round(t * 0.9),
+            h = Math.round(t * 1.2);
+          pDisp.textContent = fmt(l) + "\u2009\u2013\u2009" + fmt(h);
+          pConv.textContent =
+            "\u2248 " +
+            Math.round(l * E2) +
+            "\u2013" +
+            Math.round(h * E2) +
+            " EUR \u00b7 " +
+            Math.round(l * U2) +
+            "\u2013" +
+            Math.round(h * U2) +
+            " USD";
+        } else {
+          pBar.classList.remove("visible");
+          pDisp.textContent = "\u2014";
+          pConv.textContent = "";
+        }
+        return { total: t };
+      }
+
+      /* Navigation */
+      function showStep(n) {
+        steps.forEach((s) => s.classList.remove("active"));
+        steps[n].classList.add("active");
+        pSteps.forEach((p, i) => {
+          p.classList.remove("active", "done");
+          if (i < n) p.classList.add("done");
+          if (i === n) p.classList.add("active");
+        });
+        pFill.style.width = "calc(" + (n / (tot - 1)) * 100 + "% - 28px)";
+        window.scrollTo({
+          top: document.querySelector(".progress-bar").offsetTop - 60,
+          behavior: "smooth",
+        });
+        if (n === 5) buildSummary();
+      }
+      function validateStep(n) {
+        let v = true;
+        const s = steps[n];
+        s.querySelectorAll(
+          "input[required]:not([type=radio]):not([type=checkbox]),select[required],textarea[required]",
+        ).forEach((f) => {
+          const w = f.closest(".f-field") || f.parentElement;
+          let ok =
+            f.type === "email"
+              ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim())
+              : f.value.trim() !== "";
+          f.classList.toggle("error", !ok);
+          if (w) w.classList.toggle("has-error", !ok);
+          if (!ok) v = false;
+        });
+        if (n === 1) {
+          const r = form.querySelector('[name="type_site"]:checked');
+          if (!r) {
+            v = false;
+            document.getElementById("typeError").style.display = "block";
+          }
+        }
+        return v;
+      }
+      function nextStep() {
+        if (!validateStep(cur)) {
+          const e = steps[cur].querySelector(".error,.has-error");
+          if (e) e.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+        if (cur < tot - 1) {
+          cur++;
+          showStep(cur);
+        }
+      }
+      function prevStep() {
+        if (cur > 0) {
+          cur--;
+          showStep(cur);
+        }
+      }
+      pSteps.forEach((p, i) => {
+        p.addEventListener("click", () => {
+          if (i < cur) {
+            cur = i;
+            showStep(cur);
+          }
+        });
+      });
+
+      /* Summary */
+      function buildSummary() {
+        const sc = document.getElementById("summaryContent"),
+          pb = document.getElementById("priceBreakdown");
+        const gv = (n) => {
+          const e = form.querySelector('[name="' + n + '"]');
+          return e ? e.value : "\u2014";
+        };
+        const gl = (n) => {
+          const e = form.querySelector('[name="' + n + '"]:checked');
+          if (!e) return "\u2014";
+          const l = e.closest("label");
+          return (
+            (l ? l.querySelector(".pill-text,.v-card-name") : null)
+              ?.textContent || e.value
+          );
+        };
+        const feats = [
+          ...form.querySelectorAll('[name="features"]:checked'),
+        ].map(
+          (c) =>
+            c.closest("label")?.querySelector(".chk-text")?.textContent ||
+            c.value,
+        );
+        sc.innerHTML =
+          '<div class="summary-card"><div class="summary-label">Contact</div><div class="summary-value">' +
+          gv("nom") +
+          " \u00b7 " +
+          gv("email") +
+          '</div><div class="summary-value mono">' +
+          (gv("telephone") || "\u2014") +
+          " \u00b7 " +
+          (gv("entreprise") || "\u2014") +
+          '</div></div><div class="summary-card"><div class="summary-label">Projet</div><div class="summary-value">' +
+          gl("type_site") +
+          '</div><div class="summary-value mono">Pages : ' +
+          (gl("nb_pages") || "\u2014") +
+          " \u00b7 D\u00e9lai : " +
+          (gl("delai") || "\u2014") +
+          '</div></div><div class="summary-card"><div class="summary-label">Fonctionnalit\u00e9s</div><div class="summary-tags">' +
+          (feats.length
+            ? feats
+                .map((f) => '<span class="summary-tag">' + f + "</span>")
+                .join("")
+            : '<span class="summary-value mono">Aucune</span>') +
+          '</div></div><div class="summary-card"><div class="summary-label">Design</div><div class="summary-value mono">Style : ' +
+          (gl("style") || "\u2014") +
+          " \u00b7 Contenu : " +
+          (gl("contenu") || "\u2014") +
+          '</div></div><div class="summary-card"><div class="summary-label">Description</div><div class="summary-value mono">' +
+          (gv("description") || "\u2014") +
+          "</div></div>";
+        let rows = [],
+          total = 0;
+        const tR = form.querySelector('[name="type_site"]:checked');
+        if (tR) {
+          const p = parseInt(tR.dataset.price) || 0;
+          total += p;
+          rows.push({ l: gl("type_site") + " (base)", p: p });
+        }
+        const pR = form.querySelector('[name="nb_pages"]:checked');
+        if (pR) {
+          const p = parseInt(pR.dataset.priceMod) || 0;
+          if (p > 0) {
+            total += p;
+            rows.push({ l: gl("nb_pages") + " pages", p: p });
+          }
+        }
+        form.querySelectorAll('[name="features"]:checked').forEach((c) => {
+          const p = parseInt(c.dataset.price) || 0;
+          if (p > 0) {
+            total += p;
+            rows.push({
+              l:
+                c.closest("label")?.querySelector(".chk-text")?.textContent ||
+                c.value,
+              p: p,
+            });
+          }
+        });
+        const dR = form.querySelector('[name="delai"]:checked');
+        if (dR) {
+          const p = parseInt(dR.dataset.priceMod) || 0;
+          if (p !== 0) {
+            total += p;
+            rows.push({
+              l: p > 0 ? "Suppl\u00e9ment urgence" : "Remise d\u00e9lai",
+              p: p,
+            });
+          }
+        }
+        const lo = Math.round(total * 0.9),
+          hi = Math.round(total * 1.2);
+        pb.innerHTML =
+          '<div class="summary-label" style="margin-bottom:1rem">Estimation tarifaire</div>' +
+          rows
+            .map(
+              (r) =>
+                '<div class="breakdown-row"><span>' +
+                r.l +
+                "</span><span>" +
+                (r.p > 0 ? "+" : "") +
+                fmt(r.p) +
+                " FCFA</span></div>",
+            )
+            .join("") +
+          '<div class="breakdown-row total"><span>Fourchette estim\u00e9e</span><span class="bp">' +
+          fmt(lo) +
+          " \u2013 " +
+          fmt(hi) +
+          " FCFA</span></div><div style=\"margin-top:.6rem;font-family:'DM Mono',monospace;font-size:.5rem;color:rgba(240,237,232,.3)\">\u2248 " +
+          Math.round(lo * E2) +
+          "\u2013" +
+          Math.round(hi * E2) +
+          " EUR \u00b7 " +
+          Math.round(lo * U2) +
+          "\u2013" +
+          Math.round(hi * U2) +
+          " USD</div>";
+      }
+
+      /* Submit */
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        form.style.display = "none";
+        pBar.classList.remove("visible");
+        document.querySelector(".progress-bar").style.display = "none";
+        document.getElementById("successScreen").classList.add("visible");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      form.querySelectorAll("input,select,textarea").forEach((f) => {
+        f.addEventListener("blur", () => {
+          const w = f.closest(".f-field") || f.parentElement;
+          if (w) w.classList.remove("has-error");
+          f.classList.remove("error");
+        });
+      });
+    </script>
+  </body>
+</html>
